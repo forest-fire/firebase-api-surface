@@ -1,0 +1,26 @@
+{
+  "name": "firebase-api-surface",
+  "version": "0.5.0",
+  "description": "the publically exposed firebase API",
+  "license": "MIT",
+  "repository": "git@github.com:forest-fire/firebaes-api-surface.git",
+  "author": "Ken Snyder<ken@ken.net>",
+  "keywords": ["typescript", "firebase"],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "clean": "rimraf lib",
+    "lint": "tslint --force --format verbose \"src/**/*.ts\"",
+    "build": "ts-node ./scripts/build.ts",
+    "test": "ts-node ./scripts/test.ts ",
+    "coverage":
+      "nyc --reporter=text --reporter=html mocha --compilers ts:ts-node/register",
+    "watch": "ts-node ./scripts/watch.ts",
+    "watch:test": "ts-node ./scripts/watch.ts test",
+    "watch:all": "ts-node ./scripts/watch.ts all",
+    "deploy": "ts-node ./scripts/deploy.ts "
+  },
+  "dependencies": {
+    "@firebase/app-types": "^0.1.1"
+  }
+}
