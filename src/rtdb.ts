@@ -1,5 +1,12 @@
 import { FirebaseApp } from "@firebase/app-types";
 
+export type RTDBEventType =
+  | "value"
+  | "child_moved"
+  | "child_removed"
+  | "child_added"
+  | "child_changed";
+
 export interface IRTDBDatabase {
   /**  */
   readonly app: FirebaseApp;
@@ -17,7 +24,7 @@ export interface IRTDBDatabase {
   goOnline(): void;
 }
 
-export interface IRTDBQuery {
+export interface IRTDBQuery<T = any> {
   off(eventType?: string, callback?: ISnapshotCallback, context?: Object): void;
   /** Attaches a listener, waits for the first event, and then removes the listener */
   once(
@@ -25,27 +32,27 @@ export interface IRTDBQuery {
     userCallback?: ISnapshotCallback,
     cancelOrContext?: ((a: Error) => void) | Object,
     context?: Object
-  ): Promise<IRTDBDataSnapshot>;
+  ): Promise<IRTDBDataSnapshot<T>>;
   /** Set a limit and anchor it to the start of the window. */
-  limitToFirst(limit: number): IRTDBQuery;
+  limitToFirst(limit: number): IRTDBQuery<T>;
   /** Set a limit and anchor it to the end of the window. */
-  limitToLast(limit: number): IRTDBQuery;
+  limitToLast(limit: number): IRTDBQuery<T>;
   /** Given a child path, return a new query ordered by the specified grandchild path. */
-  orderByChild(path: string): IRTDBQuery;
+  orderByChild(path: string): IRTDBQuery<T>;
   /** Return a new query ordered by the KeyIndex */
-  orderByKey(): IRTDBQuery;
+  orderByKey(): IRTDBQuery<T>;
   /** Return a new query ordered by the PriorityIndex */
-  orderByPriority(): IRTDBQuery;
+  orderByPriority(): IRTDBQuery<T>;
   /** Return a new query ordered by the ValueIndex */
-  orderByValue(): IRTDBQuery;
+  orderByValue(): IRTDBQuery<T>;
   startAt(
     value?: number | string | boolean | null,
     name?: string | null
-  ): IRTDBQuery;
+  ): IRTDBQuery<T>;
   endAt(
     value?: number | string | boolean | null,
     name?: string | null
-  ): IRTDBQuery;
+  ): IRTDBQuery<T>;
   /**
    * Load the selection of children with exactly the specified value, and, optionally,
    * the specified name.
@@ -76,7 +83,7 @@ export interface IRTDBReference<T = any> extends IRTDBQuery {
   remove(onComplete?: (a: Error | null) => void): Promise<void>;
   /** Atomically modifies the data at this location */
   transaction(
-    transactionUpdate: (a: any) => any,
+    transactionUpdate: (a: Partial<T>) => Partial<T>,
     onComplete?: (
       a: Error | null,
       b: boolean,

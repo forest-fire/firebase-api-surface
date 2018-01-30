@@ -1,6 +1,6 @@
 {
   "name": "firebase-api-surface",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "the publically exposed firebase API",
   "license": "MIT",
   "repository": "git@github.com:forest-fire/firebaes-api-surface.git",
@@ -22,5 +22,13 @@
   },
   "dependencies": {
     "@firebase/app-types": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/rimraf": "^2.0.2",
+    "@types/shelljs": "^0.7.7",
+    "chalk": "^2.3.0",
+    "rimraf": "^2.6.2",
+    "shelljs": "^0.8.1",
+    "test-console": "^1.1.0"
   }
 }
