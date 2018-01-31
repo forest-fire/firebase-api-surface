@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "description": "the publically exposed firebase API",
   "license": "MIT",
-  "repository": "git@github.com:forest-fire/firebaes-api-surface.git",
+  "repository": "git@github.com:forest-fire/firebase-api-surface.git",
   "author": "Ken Snyder<ken@ken.net>",
   "keywords": ["typescript", "firebase"],
   "main": "lib/index.js",
