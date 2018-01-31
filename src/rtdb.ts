@@ -1,4 +1,7 @@
 import { FirebaseApp } from "@firebase/app-types";
+export interface IThenableReference<T = any>
+  extends IReference<T>,
+    PromiseLike<IReference<T>> {}
 export type EventType =
   | "value"
   | "child_moved"
@@ -23,7 +26,6 @@ export interface IFirebaseDatabase {
   goOnline(): void;
 }
 
-import { Query } from "@firebase/database-types";
 export interface IQuery<T = any> {
   /** Detaches a callback previously attached with on() */
   off(
@@ -74,7 +76,7 @@ export interface IQuery<T = any> {
   isEqual(other: IQuery): boolean;
 }
 
-export interface IReference<T = any> extends IQuery {
+export interface IReference<T = any> extends IQuery<T> {
   /** Writes data to a Database location */
   set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
   /** Write/update 1:M values to the Database */

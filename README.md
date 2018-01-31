@@ -8,13 +8,14 @@ Today the Firebase API's (admin and client based) use and export typing but in w
 
 Some of the spotty information that exists today is likely due to the fact that officially the only TypeScript that is "supported" by Google is the Functions API but for those of us who have drunk the TypeScript coolaid we want to dive in now.
 
-Structurally this library exports five high level namespaces:
+Structurally this library exports six high level namespaces:
 
+* app
 * auth
-* rtdb (_the Real-Time database_)
+* rtdb (_real-time database_)
 * firestore
-* messaging
 * storage
+* messaging
 
 Each section attempts to leverage directly what is already provided by Google but in some cases we will extend/enhance the _typing_ in the following ways:
 

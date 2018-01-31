@@ -1,4 +1,6 @@
 import { FirebaseApp } from "@firebase/app-types";
+export interface IThenableReference<T = any> extends IReference<T>, PromiseLike<IReference<T>> {
+}
 export declare type EventType = "value" | "child_moved" | "child_removed" | "child_added" | "child_changed";
 export interface IFirebaseDatabase {
     readonly app: FirebaseApp;
@@ -9,6 +11,7 @@ export interface IFirebaseDatabase {
 }
 export interface IQuery<T = any> {
     off(eventType?: EventType, callback?: ISnapshotCallback, context?: Object): void;
+    on(eventType: EventType, callback: (a: IDataSnapshot | null, b?: string) => any, cancelCallbackOrContext?: Object | null, context?: Object | null): (a: IDataSnapshot | null, b?: string) => any;
     once(eventType: EventType, userCallback?: ISnapshotCallback, cancelOrContext?: ((a: Error) => void) | Object, context?: Object): Promise<IDataSnapshot<T>>;
     limitToFirst(limit: number): IQuery<T>;
     limitToLast(limit: number): IQuery<T>;
@@ -17,13 +20,13 @@ export interface IQuery<T = any> {
     orderByPriority(): IQuery<T>;
     orderByValue(): IQuery<T>;
     startAt(value?: number | string | boolean | null, name?: string | null): IQuery<T>;
-    endAt(value?: number | string | boolean | null, name?: string | null): IQuery<T>;
+    endAt(value: number | string | boolean | null, key?: string): IQuery;
     equalTo(value: number | string | boolean | null, name?: string): IQuery;
     toString(): string;
     toJSON(): string;
     isEqual(other: IQuery): boolean;
 }
-export interface IReference<T = any> extends IQuery {
+export interface IReference<T = any> extends IQuery<T> {
     set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
     update(objectToMerge: Partial<T>, onComplete?: (a: Error | null) => void): Promise<void>;
     setWithPriority(newVal: T, newPriority: string | number | null, onComplete?: (a: Error | null) => void): Promise<any>;
