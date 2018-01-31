@@ -1,52 +1,52 @@
 import { FirebaseApp } from "@firebase/app-types";
-export declare type RTDBEventType = "value" | "child_moved" | "child_removed" | "child_added" | "child_changed";
-export interface IRTDBDatabase {
+export declare type EventType = "value" | "child_moved" | "child_removed" | "child_added" | "child_changed";
+export interface IFirebaseDatabase {
     readonly app: FirebaseApp;
-    ref(pathString?: string): IRTDBReference;
-    refFromURL(url: string): IRTDBReference;
+    ref(pathString?: string): IReference;
+    refFromURL(url: string): IReference;
     goOffline(): void;
     goOnline(): void;
 }
-export interface IRTDBQuery<T = any> {
-    off(eventType?: string, callback?: ISnapshotCallback, context?: Object): void;
-    once(eventType: string, userCallback?: ISnapshotCallback, cancelOrContext?: ((a: Error) => void) | Object, context?: Object): Promise<IRTDBDataSnapshot<T>>;
-    limitToFirst(limit: number): IRTDBQuery<T>;
-    limitToLast(limit: number): IRTDBQuery<T>;
-    orderByChild(path: string): IRTDBQuery<T>;
-    orderByKey(): IRTDBQuery<T>;
-    orderByPriority(): IRTDBQuery<T>;
-    orderByValue(): IRTDBQuery<T>;
-    startAt(value?: number | string | boolean | null, name?: string | null): IRTDBQuery<T>;
-    endAt(value?: number | string | boolean | null, name?: string | null): IRTDBQuery<T>;
-    equalTo(value: number | string | boolean | null, name?: string): IRTDBQuery;
+export interface IQuery<T = any> {
+    off(eventType?: EventType, callback?: ISnapshotCallback, context?: Object): void;
+    once(eventType: EventType, userCallback?: ISnapshotCallback, cancelOrContext?: ((a: Error) => void) | Object, context?: Object): Promise<IDataSnapshot<T>>;
+    limitToFirst(limit: number): IQuery<T>;
+    limitToLast(limit: number): IQuery<T>;
+    orderByChild(path: string): IQuery<T>;
+    orderByKey(): IQuery<T>;
+    orderByPriority(): IQuery<T>;
+    orderByValue(): IQuery<T>;
+    startAt(value?: number | string | boolean | null, name?: string | null): IQuery<T>;
+    endAt(value?: number | string | boolean | null, name?: string | null): IQuery<T>;
+    equalTo(value: number | string | boolean | null, name?: string): IQuery;
     toString(): string;
     toJSON(): string;
-    isEqual(other: IRTDBQuery): boolean;
+    isEqual(other: IQuery): boolean;
 }
-export interface IRTDBReference<T = any> extends IRTDBQuery {
+export interface IReference<T = any> extends IQuery {
     set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
     update(objectToMerge: Partial<T>, onComplete?: (a: Error | null) => void): Promise<void>;
     setWithPriority(newVal: T, newPriority: string | number | null, onComplete?: (a: Error | null) => void): Promise<any>;
     remove(onComplete?: (a: Error | null) => void): Promise<void>;
-    transaction(transactionUpdate: (a: Partial<T>) => Partial<T>, onComplete?: (a: Error | null, b: boolean, c: IRTDBDataSnapshot<T> | null) => void, applyLocally?: boolean): Promise<IRTDBTransactionResult<T>>;
+    transaction(transactionUpdate: (a: Partial<T>) => Partial<T>, onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot<T> | null) => void, applyLocally?: boolean): Promise<ITransactionResult<T>>;
     setPriority(priority: string | number | null, onComplete?: (a: Error | null) => void): Promise<void>;
-    push(value?: any, onComplete?: (a: Error | null) => void): IRTDBReference<T>;
-    onDisconnect(): IRTDBOnDisconnect<T>;
+    push(value?: any, onComplete?: (a: Error | null) => void): IReference<T>;
+    onDisconnect(): IOnDisconnect<T>;
     readonly key: string | null;
-    readonly parent: IRTDBReference | null;
-    readonly root: IRTDBReference;
+    readonly parent: IReference | null;
+    readonly root: IReference;
 }
-export interface IRTDBTransactionResult<T = any> {
+export interface ITransactionResult<T = any> {
     committed: boolean;
-    snapshot: IRTDBDataSnapshot<T>;
+    snapshot: IDataSnapshot<T>;
     toJSON(): object;
 }
-export interface IRTDBDataSnapshot<T = any> {
-    readonly ref: IRTDBReference<T>;
+export interface IDataSnapshot<T = any> {
+    readonly ref: IReference<T>;
     readonly key: string;
-    child<T = any>(childPathString: string): IRTDBDataSnapshot<T>;
+    child<T = any>(childPathString: string): IDataSnapshot<T>;
     exists(): boolean;
-    forEach(action: (d: IRTDBDataSnapshot) => void): boolean;
+    forEach(action: (d: IDataSnapshot) => void): boolean;
     getPriority(): string | number | null;
     hasChild(childPathString: string): boolean;
     hasChildren(): boolean;
@@ -54,7 +54,7 @@ export interface IRTDBDataSnapshot<T = any> {
     toJSON(): any;
     val(): T;
 }
-export interface IRTDBOnDisconnect<T = any> {
+export interface IOnDisconnect<T = any> {
     cancel(onComplete?: (a: Error | null) => void): Promise<void>;
     remove(onComplete?: (a: Error | null) => void): Promise<void>;
     set(value: T, onComplete?: (a: Error | null) => void): Promise<void>;
@@ -62,5 +62,5 @@ export interface IRTDBOnDisconnect<T = any> {
     update(objectToMerge: Partial<T>, onComplete?: (a: Error | null) => void): Promise<void>;
 }
 export interface ISnapshotCallback<T = any> {
-    (a: IRTDBDataSnapshot<T>, b?: string): any;
+    (a: IDataSnapshot<T>, b?: string): any;
 }

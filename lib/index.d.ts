@@ -1,3 +1,7 @@
-export { RTDBEventType, IRTDBDatabase, IRTDBDataSnapshot, IRTDBOnDisconnect, IRTDBQuery, IRTDBReference, IRTDBTransactionResult } from "./rtdb";
+import * as rtdb from "./rtdb";
 import * as storage from "./storage";
-export { storage };
+import * as firestore from "./firestore";
+import * as messaging from "./messaging";
+import * as app from "./app";
+import * as auth from "./auth";
+export { app, auth, rtdb, storage, firestore, messaging };

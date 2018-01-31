@@ -10,65 +10,71 @@ export interface IFirebaseDatabase {
   /**  */
   readonly app: FirebaseApp;
   /** Returns a reference to the root or the path specified in opt_pathString. */
-  ref(pathString?: string): Reference;
+  ref(pathString?: string): IReference;
   /**
    * Returns a reference to the root or the path specified in url.
    * We throw a exception if the url is not in the same domain as the
    * current repo.
    */
-  refFromURL(url: string): Reference;
+  refFromURL(url: string): IReference;
   /** Disconnects from the server (all Database operations will be completed offline). */
   goOffline(): void;
   /** Reconnects to the server and synchronizes the offline Database state with the server state. */
   goOnline(): void;
 }
 
-export interface Query<T = any> {
+import { Query } from "@firebase/database-types";
+export interface IQuery<T = any> {
+  /** Detaches a callback previously attached with on() */
   off(
     eventType?: EventType,
     callback?: ISnapshotCallback,
     context?: Object
   ): void;
+  /** Listens for data changes at a particular location */
+  on(
+    eventType: EventType,
+    callback: (a: IDataSnapshot | null, b?: string) => any,
+    cancelCallbackOrContext?: Object | null,
+    context?: Object | null
+  ): (a: IDataSnapshot | null, b?: string) => any;
   /** Attaches a listener, waits for the first event, and then removes the listener */
   once(
     eventType: EventType,
     userCallback?: ISnapshotCallback,
     cancelOrContext?: ((a: Error) => void) | Object,
     context?: Object
-  ): Promise<DataSnapshot<T>>;
+  ): Promise<IDataSnapshot<T>>;
   /** Set a limit and anchor it to the start of the window. */
-  limitToFirst(limit: number): Query<T>;
+  limitToFirst(limit: number): IQuery<T>;
   /** Set a limit and anchor it to the end of the window. */
-  limitToLast(limit: number): Query<T>;
+  limitToLast(limit: number): IQuery<T>;
   /** Given a child path, return a new query ordered by the specified grandchild path. */
-  orderByChild(path: string): Query<T>;
+  orderByChild(path: string): IQuery<T>;
   /** Return a new query ordered by the KeyIndex */
-  orderByKey(): Query<T>;
+  orderByKey(): IQuery<T>;
   /** Return a new query ordered by the PriorityIndex */
-  orderByPriority(): Query<T>;
+  orderByPriority(): IQuery<T>;
   /** Return a new query ordered by the ValueIndex */
-  orderByValue(): Query<T>;
+  orderByValue(): IQuery<T>;
   startAt(
     value?: number | string | boolean | null,
     name?: string | null
-  ): Query<T>;
-  endAt(
-    value?: number | string | boolean | null,
-    name?: string | null
-  ): Query<T>;
+  ): IQuery<T>;
+  endAt(value: number | string | boolean | null, key?: string): IQuery;
   /**
    * Load the selection of children with exactly the specified value, and, optionally,
    * the specified name.
    */
-  equalTo(value: number | string | boolean | null, name?: string): Query;
+  equalTo(value: number | string | boolean | null, name?: string): IQuery;
   /** URL for this location. */
   toString(): string;
   toJSON(): string;
   /** Return true if this query and the provided query are equivalent; otherwise, return false. */
-  isEqual(other: Query): boolean;
+  isEqual(other: IQuery): boolean;
 }
 
-export interface Reference<T = any> extends Query {
+export interface IReference<T = any> extends IQuery {
   /** Writes data to a Database location */
   set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
   /** Write/update 1:M values to the Database */
@@ -90,42 +96,41 @@ export interface Reference<T = any> extends Query {
     onComplete?: (
       a: Error | null,
       b: boolean,
-      c: DataSnapshot<T> | null
+      c: IDataSnapshot<T> | null
     ) => void,
     applyLocally?: boolean
-  ): Promise<TransactionResult<T>>;
+  ): Promise<ITransactionResult<T>>;
   /** Sets a priority for the data at this Database location. */
   setPriority(
     priority: string | number | null,
     onComplete?: (a: Error | null) => void
   ): Promise<void>;
-  /** Generates a new child location using a unique key and returns its Reference. */
-  push(value?: any, onComplete?: (a: Error | null) => void): Reference<T>;
+  /** Generates a new child location using a unique key and returns its IReference. */
+  push(value?: any, onComplete?: (a: Error | null) => void): IReference<T>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
-  onDisconnect(): OnDisconnect<T>;
+  onDisconnect(): IOnDisconnect<T>;
   readonly key: string | null;
-  readonly parent: Reference | null;
-  readonly root: Reference;
+  readonly parent: IReference | null;
+  readonly root: IReference;
 }
-
-export interface TransactionResult<T = any> {
+export interface ITransactionResult<T = any> {
   committed: boolean;
-  snapshot: DataSnapshot<T>;
+  snapshot: IDataSnapshot<T>;
   toJSON(): object;
 }
 
-export interface DataSnapshot<T = any> {
-  /** The Reference for the location that generated this DataSnapshot. */
-  readonly ref: Reference<T>;
+export interface IDataSnapshot<T = any> {
+  /** The IReference for the location that generated this DataSnapshot. */
+  readonly ref: IReference<T>;
   /** The key (last part of the path) of the location of this DataSnapshot. */
   readonly key: string;
 
   /** Gets another DataSnapshot for the location at the specified relative path. */
-  child<T = any>(childPathString: string): DataSnapshot<T>;
+  child<T = any>(childPathString: string): IDataSnapshot<T>;
   /** Returns true if this DataSnapshot contains any data. It is slightly more efficient than using snapshot.val() !== null. */
   exists(): boolean;
   /** Enumerates the top-level children in the DataSnapshot. */
-  forEach(action: (d: DataSnapshot) => void): boolean;
+  forEach(action: (d: IDataSnapshot) => void): boolean;
   /** Gets the priority value of the data in this DataSnapshot. */
   getPriority(): string | number | null;
   /** Returns true if the specified child path has (non-null) data. */
@@ -140,7 +145,7 @@ export interface DataSnapshot<T = any> {
   val(): T;
 }
 
-export interface OnDisconnect<T = any> {
+export interface IOnDisconnect<T = any> {
   cancel(onComplete?: (a: Error | null) => void): Promise<void>;
   remove(onComplete?: (a: Error | null) => void): Promise<void>;
   set(value: T, onComplete?: (a: Error | null) => void): Promise<void>;
@@ -156,5 +161,5 @@ export interface OnDisconnect<T = any> {
 }
 
 export interface ISnapshotCallback<T = any> {
-  (a: DataSnapshot<T>, b?: string): any;
+  (a: IDataSnapshot<T>, b?: string): any;
 }

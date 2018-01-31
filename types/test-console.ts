@@ -12,7 +12,7 @@ interface ITestStream {
   ignoreSync(): void;
 }
 
-declare module 'test-console' {
+declare module "test-console" {
   export let stdout: ITestStream;
   export let stderr: ITestStream;
 }

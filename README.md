@@ -22,8 +22,11 @@ Each section attempts to leverage directly what is already provided by Google bu
 * **generics** - the API for user-defined datatypes is currently typed as "any" with the spec but it is often desireable by consumers to tighten the typing to a user defined type and this can be achieved easily achieved with Typescript
 * **missing types** - there are some places where "any" typing is used where there is a known constraint. An example of this is _event types_ in the real-time database. Rather than allowing any "string" property we explictly define the valid event types and constrain it to that.
 * **Interface naming** - in TypeScript it is recommended that you export interfaces names as starting with a capital **I** and though I sometimes am tempted to avoid this as I find "Settings" _sexier_ than "ISettings" it comes at the cost of loss of contextual information and in this case I think holds particularly useful value. For that reason all interface names are renamed to with an _I_-prefix.
-* **Class to Interface** - Google mixes a combination of "types", "interfaces", and "classes" into their typing. In the case of of class definitions though the intent is not entirely clear as no implementation is actually provided so they are in essence just serving as interfaces under a differnt name. For that reason, these classes will be converted to an interfaced (and renamed with the above naming convention)
-  > If anyone can shed any design insight into this count me as interested. My guess is that the admin and client API's both implement these classes in slightly different ways and there was a desire to strictly type the private constructor across both API's to be the same? Not sure but that's all I could come up with.
+* **Class to Interface**
+  * Google mixes a combination of "types", "interfaces", and "classes" into their typing.
+  * In the case of of **Class** definitions though the intent is not entirely clear as no implementation is actually provided so they are in essence just serving as interfaces under a differnt name. For that reason, these classes will be converted to an interfaced (and renamed with the above naming convention)
+    > If anyone can shed any design insight into this count me as interested. My guess is that the admin and client API's both implement these classes in slightly different ways and there was a desire to strictly type the private constructor across both API's to be the same? Not sure but that's all I could come up with.
+  * There are a few cases where the Class syntax is used to add _static_ properties to the class. There isn't any way to do this with an interface so in these instances the class is left as-is (see "auth" interface for examples).
 
 ## Example Usage
 
