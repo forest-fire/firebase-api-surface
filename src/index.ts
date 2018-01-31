@@ -6,4 +6,10 @@ export {
   IRTDBQuery,
   IRTDBReference,
   IRTDBTransactionResult
-} from "./rtdb";
+} from "./rtdb2";
+
+import * as storage from "./storage";
+export { storage };
+
+import * as firestore from "./firestore";
+export { firestore };

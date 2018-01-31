@@ -5,7 +5,10 @@
   "license": "MIT",
   "repository": "git@github.com:forest-fire/firebaes-api-surface.git",
   "author": "Ken Snyder<ken@ken.net>",
-  "keywords": ["typescript", "firebase"],
+  "keywords": [
+    "typescript",
+    "firebase"
+  ],
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -13,15 +16,19 @@
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "build": "ts-node ./scripts/build.ts",
     "test": "ts-node ./scripts/test.ts ",
-    "coverage":
-      "nyc --reporter=text --reporter=html mocha --compilers ts:ts-node/register",
+    "coverage": "nyc --reporter=text --reporter=html mocha --compilers ts:ts-node/register",
     "watch": "ts-node ./scripts/watch.ts",
     "watch:test": "ts-node ./scripts/watch.ts test",
     "watch:all": "ts-node ./scripts/watch.ts all",
     "deploy": "ts-node ./scripts/deploy.ts "
   },
   "dependencies": {
-    "@firebase/app-types": "^0.1.1"
+    "@firebase/app-types": "^0.1.1",
+    "@firebase/database-types": "^0.1.1",
+    "@firebase/firestore-types": "^0.2.1",
+    "@firebase/messaging-types": "^0.1.1",
+    "@firebase/storage-types": "^0.1.1",
+    "@firebase/util": "^0.1.7"
   },
   "devDependencies": {
     "@types/rimraf": "^2.0.2",
