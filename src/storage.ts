@@ -11,5 +11,5 @@ export {
   UploadMetadata as IUploadMetadata,
   UploadTask as IUploadTask,
   UploadTaskSnapshot as IUploadTaskSnapshot,
-  FirebaseStorage
+  FirebaseStorage as IFirebaseStorage
 } from "@firebase/storage-types";
