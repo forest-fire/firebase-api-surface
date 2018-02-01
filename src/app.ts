@@ -3,9 +3,9 @@ import {
   FirebaseNamespace as IFirebaseNamespace
 } from "@firebase/app-types";
 import { IFirebaseDatabase } from "./rtdb";
-import { IFirebaseFirestore } from "./firestore";
-import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
-import { FirebaseStorage as FirebaseClientStorage } from "./storage";
+// import { IFirebaseFirestore } from "./firestore";
+// import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
+// import { FirebaseStorage as FirebaseClientStorage } from "./storage";
 
 export interface FirebaseAdminOptions {
   credential?: IAdminCredentialAccessor;
@@ -57,7 +57,7 @@ export interface IFirebaseApp {
   firestore?: () => any;
   // firestore?: () => IFirebaseFirestore;
   /** returns the messaging API */
-  messaging?: () => FirebaseClientMessaging | any;
+  messaging?: () => any;
   /** returns the storage API */
-  storage?: () => FirebaseClientStorage | any;
+  storage?: () => any;
 }
