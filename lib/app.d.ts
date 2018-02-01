@@ -1,9 +1,7 @@
 import { FirebaseOptions as FirebaseClientOptions } from "@firebase/app-types";
 import { IFirebaseDatabase } from "./rtdb";
-import { IFirebaseFirestore } from "./firestore";
-import { FirebaseMessaging } from "./messaging";
-import { FirebaseStorage } from "./storage";
-export { FirebaseNamespace as IFirebaseNamespace } from "@firebase/app-types";
+import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
+import { FirebaseStorage as FirebaseClientStorage } from "./storage";
 export interface FirebaseAdminOptions {
     credential?: IAdminCredentialAccessor;
     databaseAuthVariableOverride?: Object;
@@ -28,7 +26,7 @@ export interface IFirebaseApp {
     delete(): Promise<void>;
     instanceId?: () => IInstanceId;
     database(): IFirebaseDatabase;
-    firestore?: () => IFirebaseFirestore;
-    messaging?: () => FirebaseMessaging;
-    storage?: () => FirebaseStorage;
+    firestore?: () => any;
+    messaging?: () => FirebaseClientMessaging | any;
+    storage?: () => FirebaseClientStorage | any;
 }

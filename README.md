@@ -28,6 +28,8 @@ Each section attempts to leverage directly what is already provided by Google bu
   * In the case of of **Class** definitions though the intent is not entirely clear as no implementation is actually provided so they are in essence just serving as interfaces under a differnt name. For that reason, these classes will be converted to an interfaced (and renamed with the above naming convention)
     > If anyone can shed any design insight into this count me as interested. My guess is that the admin and client API's both implement these classes in slightly different ways and there was a desire to strictly type the private constructor across both API's to be the same? Not sure but that's all I could come up with.
   * There are a few cases where the Class syntax is used to add _static_ properties to the class. There isn't any way to do this with an interface so in these instances the class is left as-is (see "auth" interface for examples).
+* **Client API has larger API surface area** - there are instances where the client API (look at firestore for good examples) has a larger API surface area than the Admin API. In these cases I am currently taking the Client API class definition, and creating an interface which makes the client-only properties optional. Sadly this results in more cut and paste than I'd like but not sure if there's a better option presently availble.
+* **Client and Admin APIs radically different** - in the case of the Auth interface we see very large differences, in this case I am simply creating a union type between the two distinct types.
 
 ## Example Usage
 

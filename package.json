@@ -1,6 +1,6 @@
 {
   "name": "firebase-api-surface",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "the publically exposed firebase API",
   "license": "MIT",
   "repository": "git@github.com:forest-fire/firebase-api-surface.git",
