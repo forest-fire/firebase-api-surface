@@ -109,7 +109,7 @@ export interface IReference<T = any> extends IQuery<T> {
   push(
     value?: any,
     onComplete?: (a: Error | null) => void
-  ): IThenableReference<T>;
+  ): IThenableReference<IReference<T>>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
   onDisconnect(): IOnDisconnect<T>;
   readonly key: string | null;
