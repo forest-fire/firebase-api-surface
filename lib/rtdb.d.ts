@@ -1,9 +1,9 @@
-import { FirebaseApp } from "@firebase/app-types";
+import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any> extends IReference<T>, PromiseLike<IReference<T>> {
 }
 export declare type EventType = "value" | "child_moved" | "child_removed" | "child_added" | "child_changed";
 export interface IFirebaseDatabase {
-    readonly app: FirebaseApp;
+    readonly app: IFirebaseApp;
     ref(pathString?: string): IReference;
     refFromURL(url: string): IReference;
     goOffline(): void;

@@ -1,4 +1,4 @@
-import { FirebaseApp } from "@firebase/app-types";
+import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any>
   extends IReference<T>,
     PromiseLike<IReference<T>> {}
@@ -11,7 +11,7 @@ export type EventType =
 
 export interface IFirebaseDatabase {
   /**  */
-  readonly app: FirebaseApp;
+  readonly app: IFirebaseApp;
   /** Returns a reference to the root or the path specified in opt_pathString. */
   ref(pathString?: string): IReference;
   /**

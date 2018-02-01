@@ -1,6 +1,6 @@
 import { FirebaseOptions as FirebaseClientOptions } from "@firebase/app-types";
 import { IFirebaseDatabase } from "./rtdb";
-import { FirebaseFirestore } from "./firestore";
+import { IFirebaseFirestore } from "./firestore";
 import { FirebaseMessaging } from "./messaging";
 import { FirebaseStorage } from "./storage";
 export { FirebaseNamespace as IFirebaseNamespace } from "@firebase/app-types";
@@ -52,9 +52,9 @@ export interface IFirebaseApp {
   /** returns the real-time database API */
   database(): IFirebaseDatabase;
   /** returns the firestore database API */
-  firestore?: () => FirebaseFirestore;
+  firestore?: () => IFirebaseFirestore;
   /** returns the messaging API */
-  messaging: () => FirebaseMessaging;
+  messaging?: () => FirebaseMessaging;
   /** returns the storage API */
-  storage: () => FirebaseStorage;
+  storage?: () => FirebaseStorage;
 }
