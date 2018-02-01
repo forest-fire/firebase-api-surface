@@ -76,6 +76,7 @@ export interface IQuery<T = any> {
   isEqual(other: IQuery): boolean;
 }
 
+import { DataSnapshot } from "@firebase/database-types";
 export interface IReference<T = any> extends IQuery<T> {
   /** Writes data to a Database location */
   set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
@@ -94,21 +95,21 @@ export interface IReference<T = any> extends IQuery<T> {
   remove(onComplete?: (a: Error | null) => void): Promise<void>;
   /** Atomically modifies the data at this location */
   transaction(
-    transactionUpdate: (a: Partial<T>) => Partial<T>,
-    onComplete?: (
-      a: Error | null,
-      b: boolean,
-      c: IDataSnapshot<T> | null
-    ) => void,
+    transactionUpdate: (a: Partial<T>) => any,
+    onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot | null) => any,
     applyLocally?: boolean
   ): Promise<ITransactionResult<T>>;
+  update(values: Object, onComplete?: (a: Error | null) => any): Promise<any>;
   /** Sets a priority for the data at this Database location. */
   setPriority(
     priority: string | number | null,
     onComplete?: (a: Error | null) => void
   ): Promise<void>;
   /** Generates a new child location using a unique key and returns its IReference. */
-  push(value?: any, onComplete?: (a: Error | null) => void): IReference<T>;
+  push(
+    value?: any,
+    onComplete?: (a: Error | null) => void
+  ): IThenableReference<T>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
   onDisconnect(): IOnDisconnect<T>;
   readonly key: string | null;

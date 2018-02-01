@@ -31,9 +31,10 @@ export interface IReference<T = any> extends IQuery<T> {
     update(objectToMerge: Partial<T>, onComplete?: (a: Error | null) => void): Promise<void>;
     setWithPriority(newVal: T, newPriority: string | number | null, onComplete?: (a: Error | null) => void): Promise<any>;
     remove(onComplete?: (a: Error | null) => void): Promise<void>;
-    transaction(transactionUpdate: (a: Partial<T>) => Partial<T>, onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot<T> | null) => void, applyLocally?: boolean): Promise<ITransactionResult<T>>;
+    transaction(transactionUpdate: (a: Partial<T>) => any, onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot | null) => any, applyLocally?: boolean): Promise<ITransactionResult<T>>;
+    update(values: Object, onComplete?: (a: Error | null) => any): Promise<any>;
     setPriority(priority: string | number | null, onComplete?: (a: Error | null) => void): Promise<void>;
-    push(value?: any, onComplete?: (a: Error | null) => void): IReference<T>;
+    push(value?: any, onComplete?: (a: Error | null) => void): IThenableReference<T>;
     onDisconnect(): IOnDisconnect<T>;
     readonly key: string | null;
     readonly parent: IReference | null;
