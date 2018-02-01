@@ -1,6 +1,6 @@
 {
   "name": "firebase-api-surface",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "the publically exposed firebase API",
   "license": "MIT",
   "repository": "git@github.com:forest-fire/firebase-api-surface.git",
@@ -35,7 +35,7 @@
     "lodash.first": "^3.0.0",
     "lodash.last": "^3.0.0",
     "rimraf": "^2.6.2",
-    "shelljs": "^0.8.1",
+    "async-shelljs": "^0.1.2",
     "test-console": "^1.1.0",
     "tslint": "^5.9.1",
     "typescript": "^2.8.0-dev.20180131"

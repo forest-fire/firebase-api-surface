@@ -1,7 +1,5 @@
 import { FirebaseOptions as FirebaseClientOptions } from "@firebase/app-types";
 import { IFirebaseDatabase } from "./rtdb";
-import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
-import { FirebaseStorage as FirebaseClientStorage } from "./storage";
 export interface FirebaseAdminOptions {
     credential?: IAdminCredentialAccessor;
     databaseAuthVariableOverride?: Object;
@@ -27,6 +25,6 @@ export interface IFirebaseApp {
     instanceId?: () => IInstanceId;
     database(): IFirebaseDatabase;
     firestore?: () => any;
-    messaging?: () => FirebaseClientMessaging | any;
-    storage?: () => FirebaseClientStorage | any;
+    messaging?: () => any;
+    storage?: () => any;
 }
