@@ -1,4 +1,4 @@
-import { FirebaseApp } from "@firebase/app-types";
+import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any>
   extends IReference<T>,
     PromiseLike<IReference<T>> {}
@@ -11,7 +11,8 @@ export type EventType =
 
 export interface IFirebaseDatabase {
   /**  */
-  readonly app: FirebaseApp;
+  // readonly app: IFirebaseApp;
+  app: any;
   /** Returns a reference to the root or the path specified in opt_pathString. */
   ref(pathString?: string): IReference;
   /**
@@ -71,12 +72,11 @@ export interface IQuery<T = any> {
   equalTo(value: number | string | boolean | null, name?: string): IQuery;
   /** URL for this location. */
   toString(): string;
-  toJSON(): string;
+  toJSON(): Object;
   /** Return true if this query and the provided query are equivalent; otherwise, return false. */
   isEqual(other: IQuery): boolean;
 }
 
-import { DataSnapshot } from "@firebase/database-types";
 export interface IReference<T = any> extends IQuery<T> {
   /** Writes data to a Database location */
   set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
@@ -109,7 +109,7 @@ export interface IReference<T = any> extends IQuery<T> {
   push(
     value?: any,
     onComplete?: (a: Error | null) => void
-  ): IThenableReference<T>;
+  ): IThenableReference<IReference<T>>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
   onDisconnect(): IOnDisconnect<T>;
   readonly key: string | null;
@@ -119,7 +119,7 @@ export interface IReference<T = any> extends IQuery<T> {
 export interface ITransactionResult<T = any> {
   committed: boolean;
   snapshot: IDataSnapshot<T>;
-  toJSON(): object;
+  toJSON?: () => Object;
 }
 
 export interface IDataSnapshot<T = any> {
@@ -129,11 +129,11 @@ export interface IDataSnapshot<T = any> {
   readonly key: string;
 
   /** Gets another DataSnapshot for the location at the specified relative path. */
-  child<T = any>(childPathString: string): IDataSnapshot<T>;
+  child(childPathString: string): IDataSnapshot;
   /** Returns true if this DataSnapshot contains any data. It is slightly more efficient than using snapshot.val() !== null. */
   exists(): boolean;
   /** Enumerates the top-level children in the DataSnapshot. */
-  forEach(action: (d: IDataSnapshot) => void): boolean;
+  forEach(action: (d: IDataSnapshot) => boolean): boolean;
   /** Gets the priority value of the data in this DataSnapshot. */
   getPriority(): string | number | null;
   /** Returns true if the specified child path has (non-null) data. */
@@ -143,7 +143,7 @@ export interface IDataSnapshot<T = any> {
   /** Returns the number of child properties of this DataSnapshot. */
   numChildren(): number;
   /** Returns a JSON-serializable representation of this object. */
-  toJSON(): any;
+  toJSON(): Object | null;
   /** Extracts a JavaScript value from a DataSnapshot. */
   val(): T;
 }

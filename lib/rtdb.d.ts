@@ -1,9 +1,8 @@
-import { FirebaseApp } from "@firebase/app-types";
 export interface IThenableReference<T = any> extends IReference<T>, PromiseLike<IReference<T>> {
 }
 export declare type EventType = "value" | "child_moved" | "child_removed" | "child_added" | "child_changed";
 export interface IFirebaseDatabase {
-    readonly app: FirebaseApp;
+    app: any;
     ref(pathString?: string): IReference;
     refFromURL(url: string): IReference;
     goOffline(): void;
@@ -23,7 +22,7 @@ export interface IQuery<T = any> {
     endAt(value: number | string | boolean | null, key?: string): IQuery;
     equalTo(value: number | string | boolean | null, name?: string): IQuery;
     toString(): string;
-    toJSON(): string;
+    toJSON(): Object;
     isEqual(other: IQuery): boolean;
 }
 export interface IReference<T = any> extends IQuery<T> {
@@ -34,7 +33,7 @@ export interface IReference<T = any> extends IQuery<T> {
     transaction(transactionUpdate: (a: Partial<T>) => any, onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot | null) => any, applyLocally?: boolean): Promise<ITransactionResult<T>>;
     update(values: Object, onComplete?: (a: Error | null) => any): Promise<any>;
     setPriority(priority: string | number | null, onComplete?: (a: Error | null) => void): Promise<void>;
-    push(value?: any, onComplete?: (a: Error | null) => void): IThenableReference<T>;
+    push(value?: any, onComplete?: (a: Error | null) => void): IThenableReference<IReference<T>>;
     onDisconnect(): IOnDisconnect<T>;
     readonly key: string | null;
     readonly parent: IReference | null;
@@ -43,19 +42,19 @@ export interface IReference<T = any> extends IQuery<T> {
 export interface ITransactionResult<T = any> {
     committed: boolean;
     snapshot: IDataSnapshot<T>;
-    toJSON(): object;
+    toJSON?: () => Object;
 }
 export interface IDataSnapshot<T = any> {
     readonly ref: IReference<T>;
     readonly key: string;
-    child<T = any>(childPathString: string): IDataSnapshot<T>;
+    child(childPathString: string): IDataSnapshot;
     exists(): boolean;
-    forEach(action: (d: IDataSnapshot) => void): boolean;
+    forEach(action: (d: IDataSnapshot) => boolean): boolean;
     getPriority(): string | number | null;
     hasChild(childPathString: string): boolean;
     hasChildren(): boolean;
     numChildren(): number;
-    toJSON(): any;
+    toJSON(): Object | null;
     val(): T;
 }
 export interface IOnDisconnect<T = any> {
