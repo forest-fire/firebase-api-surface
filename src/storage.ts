@@ -10,6 +10,5 @@ export {
   SettableMetadata as ISettableMetadata,
   UploadMetadata as IUploadMetadata,
   UploadTask as IUploadTask,
-  UploadTaskSnapshot as IUploadTaskSnapshot,
-  FirebaseStorage as IFirebaseStorage
+  UploadTaskSnapshot as IUploadTaskSnapshot
 } from "@firebase/storage-types";
