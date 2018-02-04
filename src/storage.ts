@@ -1,9 +1,9 @@
 import { Reference } from "@firebase/storage-types";
 
-export interface IReference extends Reference {
-  getMetadata<T = any>(): Promise<T>;
-  getDownloadURL(): Promise<string>;
-}
+// export interface IReference extends Reference {
+//   getMetadata<T = any>(): Promise<T>;
+//   getDownloadURL(): Promise<string>;
+// }
 
 export {
   FullMetadata as IFullMetadata,
