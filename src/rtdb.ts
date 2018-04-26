@@ -1,7 +1,7 @@
 import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any>
   extends IReference<T>,
-    PromiseLike<IReference<T>> {}
+  PromiseLike<IReference<T>> { }
 export type EventType =
   | "value"
   | "child_moved"
@@ -109,7 +109,7 @@ export interface IReference<T = any> extends IQuery<T> {
   push(
     value?: any,
     onComplete?: (a: Error | null) => void
-  ): IThenableReference<IReference<T>>;
+  ): IThenableReference<T>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
   onDisconnect(): IOnDisconnect<T>;
   readonly key: string | null;
