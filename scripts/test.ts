@@ -4,7 +4,6 @@ import { exec } from "async-shelljs";
 import * as rm from "rimraf";
 import * as process from "process";
 import * as program from "commander";
-import "../test/testing/test-console";
 import { stdout, stderr } from "test-console";
 
 function getScope(files?: string[]): string {
