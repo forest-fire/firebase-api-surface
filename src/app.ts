@@ -7,6 +7,7 @@ import { IFirebaseDatabase } from "./rtdb";
 // import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
 // import { FirebaseStorage as FirebaseClientStorage } from "./storage";
 
+// tslint:disable-next-line:interface-name
 export interface FirebaseAdminOptions {
   credential?: IAdminCredentialAccessor;
   databaseAuthVariableOverride?: Object;
