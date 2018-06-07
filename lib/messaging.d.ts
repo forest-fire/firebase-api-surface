@@ -1,1 +1,1 @@
-export { FirebaseMessaging } from "@firebase/messaging-types";
+export declare const NotYetDone: boolean;

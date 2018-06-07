@@ -1,3 +1,4 @@
+import { IDictionary } from "common-types";
 import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any>
   extends IReference<T>,
@@ -29,11 +30,7 @@ export interface IFirebaseDatabase {
 
 export interface IQuery<T = any> {
   /** Detaches a callback previously attached with on() */
-  off(
-    eventType?: EventType,
-    callback?: ISnapshotCallback,
-    context?: Object
-  ): void;
+  off(eventType?: EventType, callback?: ISnapshotCallback, context?: Object): void;
   /** Listens for data changes at a particular location */
   on(
     eventType: EventType,
@@ -60,10 +57,7 @@ export interface IQuery<T = any> {
   orderByPriority(): IQuery<T>;
   /** Return a new query ordered by the ValueIndex */
   orderByValue(): IQuery<T>;
-  startAt(
-    value?: number | string | boolean | null,
-    name?: string | null
-  ): IQuery<T>;
+  startAt(value?: number | string | boolean | null, name?: string | null): IQuery<T>;
   endAt(value: number | string | boolean | null, key?: string): IQuery;
   /**
    * Load the selection of children with exactly the specified value, and, optionally,
@@ -78,11 +72,15 @@ export interface IQuery<T = any> {
 }
 
 export interface IReference<T = any> extends IQuery<T> {
+  readonly key: string | null;
+  readonly parent: IReference | null;
+  readonly root: IReference;
+
   /** Writes data to a Database location */
   set(newVal: T, onComplete?: (a: Error | null) => void): Promise<void>;
-  /** Write/update 1:M values to the Database */
+  /** Write/update 1:M values to the Database, if you need to update multiple paths in DB then the keys must be deep paths notated by slash-notation */
   update(
-    objectToMerge: Partial<T>,
+    objectToMerge: Partial<T> | IDictionary<Partial<T>>,
     onComplete?: (a: Error | null) => void
   ): Promise<void>;
   /** Like set() but also specifies the priority for that data */
@@ -91,7 +89,7 @@ export interface IReference<T = any> extends IQuery<T> {
     newPriority: string | number | null,
     onComplete?: (a: Error | null) => void
   ): Promise<any>;
-  /** Removes the data at this Database location. Any data at child locations will also be deleted.*/
+  /** Removes the data at this Database location. Any data at child locations will also be deleted. */
   remove(onComplete?: (a: Error | null) => void): Promise<void>;
   /** Atomically modifies the data at this location */
   transaction(
@@ -99,7 +97,6 @@ export interface IReference<T = any> extends IQuery<T> {
     onComplete?: (a: Error | null, b: boolean, c: IDataSnapshot | null) => any,
     applyLocally?: boolean
   ): Promise<ITransactionResult<T>>;
-  update(values: Object, onComplete?: (a: Error | null) => any): Promise<any>;
   /** Sets a priority for the data at this Database location. */
   setPriority(
     priority: string | number | null,
@@ -112,9 +109,6 @@ export interface IReference<T = any> extends IQuery<T> {
   ): IThenableReference<IReference<T>>;
   /** Returns an OnDisconnect object - see Enabling Offline Capabilities in JavaScript for more information on how to use it. */
   onDisconnect(): IOnDisconnect<T>;
-  readonly key: string | null;
-  readonly parent: IReference | null;
-  readonly root: IReference;
 }
 export interface ITransactionResult<T = any> {
   committed: boolean;
@@ -164,5 +158,6 @@ export interface IOnDisconnect<T = any> {
 }
 
 export interface ISnapshotCallback<T = any> {
+  // tslint:disable-next-line:callable-types
   (a: IDataSnapshot<T>, b?: string): any;
 }
