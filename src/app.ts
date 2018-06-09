@@ -1,7 +1,9 @@
 import {
   FirebaseOptions as FirebaseClientOptions,
   FirebaseNamespace as IFirebaseNamespace
+  // tslint:disable-next-line:no-implicit-dependencies
 } from "@firebase/app-types";
+
 import { IFirebaseDatabase } from "./rtdb";
 // import { IFirebaseFirestore } from "./firestore";
 // import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
