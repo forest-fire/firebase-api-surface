@@ -1,5 +1,4 @@
 import { IDictionary } from "common-types";
-import { IFirebaseApp } from "./app";
 export interface IThenableReference<T = any>
   extends IReference<T>,
     PromiseLike<IReference<T>> {}
