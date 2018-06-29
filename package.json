@@ -1,6 +1,6 @@
 {
   "name": "firebase-api-surface",
-  "version": "0.8.2",
+  "version": "0.8.5",
   "description": "typings for the older parts of google SDK that don't have good typing",
   "license": "MIT",
   "repository": "git@github.com:forest-fire/firebase-api-surface.git",
@@ -9,8 +9,10 @@
     "typescript",
     "firebase"
   ],
+  "files": [
+    "dist"
+  ],
   "main": "dist/firebase-api-surface.cjs.js",
-  "browser": "dist/firebase-api-surface.umd.js",
   "module": "dist/esnext/index.js",
   "typings": "dist/esnext/index.d.ts",
   "scripts": {
@@ -22,11 +24,11 @@
     "deploy": "ts-node ./scripts/deploy.ts "
   },
   "dependencies": {
-    "common-types": "^1.7.36"
+    "common-types": "^1.7.36",
+    "@firebase/app-types": "^0.1.1",
+    "@firebase/database-types": "^0.1.1"
   },
   "devDependencies": {
-    "@firebase/app-types": "^0.1.1",
-    "@firebase/database-types": "^0.1.1",
     "@types/rimraf": "^2.0.2",
     "@types/shelljs": "^0.7.7",
     "async-shelljs": "^0.1.2",

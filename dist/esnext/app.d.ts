@@ -1,4 +1,3 @@
-import { FirebaseOptions as FirebaseClientOptions } from "@firebase/app-types";
 import { IFirebaseDatabase } from "./rtdb";
 export interface FirebaseAdminOptions {
     credential?: IAdminCredentialAccessor;
@@ -29,7 +28,7 @@ export interface IFirebaseApp {
     /**
      * The (read-only) configuration options from the app initialization.
      */
-    options: FirebaseClientOptions | FirebaseAdminOptions;
+    options: import("@firebase/app-types").FirebaseOptions | FirebaseAdminOptions;
     /**
      * Make the given App unusable and free resources.
      */

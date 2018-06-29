@@ -1,13 +1,4 @@
-import {
-  FirebaseOptions as FirebaseClientOptions,
-  FirebaseNamespace as IFirebaseNamespace
-  // tslint:disable-next-line:no-implicit-dependencies
-} from "@firebase/app-types";
-
 import { IFirebaseDatabase } from "./rtdb";
-// import { IFirebaseFirestore } from "./firestore";
-// import { FirebaseMessaging as FirebaseClientMessaging } from "./messaging";
-// import { FirebaseStorage as FirebaseClientStorage } from "./storage";
 
 // tslint:disable-next-line:interface-name
 export interface FirebaseAdminOptions {
@@ -44,7 +35,7 @@ export interface IFirebaseApp {
   /**
    * The (read-only) configuration options from the app initialization.
    */
-  options: FirebaseClientOptions | FirebaseAdminOptions;
+  options: import("@firebase/app-types").FirebaseOptions | FirebaseAdminOptions;
 
   /**
    * Make the given App unusable and free resources.
